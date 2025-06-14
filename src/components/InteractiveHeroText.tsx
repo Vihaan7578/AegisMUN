@@ -20,7 +20,7 @@ const InteractiveHeroText: React.FC = () => {
             key={index}
             className="relative inline-block cursor-pointer select-none font-bebas font-normal text-aegis-white"
             style={{ 
-              fontSize: 'clamp(6rem, 16vw, 12rem)',
+              fontSize: 'clamp(2.5rem, 10vw, 8rem)',
               lineHeight: '0.9',
               transformStyle: 'preserve-3d',
               perspective: '1000px'

@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
             className="flex items-center space-x-2"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <span className="text-2xl font-serif font-black text-aegis-white hover:text-aegis-highlight transition-colors">
+            <span className="text-xl sm:text-2xl font-serif font-black text-aegis-white hover:text-aegis-highlight transition-colors">
               AEGIS MUN
             </span>
           </Link>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 interface AgendaItem {
   id: string
@@ -130,7 +131,7 @@ const Agendas: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-serif font-black text-aegis-white mb-6"
+              className="text-4xl sm:text-5xl md:text-7xl font-serif font-black text-aegis-white mb-6"
             >
               Committee Agendas
             </motion.h1>
@@ -138,7 +139,7 @@ const Agendas: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-aegis-off-white max-w-3xl mx-auto"
+              className="text-lg sm:text-xl text-aegis-off-white max-w-3xl mx-auto px-4"
             >
               Delve deep into the critical issues that will shape our world's future. 
               Each agenda is carefully crafted to challenge delegates and foster meaningful debate.
@@ -158,7 +159,7 @@ const Agendas: React.FC = () => {
         <section className="py-16 bg-aegis-black relative">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Vertical timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-aegis-brown to-aegis-burgundy h-full" />
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-1 bg-gradient-to-b from-aegis-brown to-aegis-burgundy h-full" />
 
             {/* Agenda items */}
             <div className="space-y-16">
@@ -183,16 +184,16 @@ const Agendas: React.FC = () => {
                   }}
                   viewport={{ once: true, margin: "-100px" }}
                   className={`relative flex items-center ${
-                    index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-                  }`}
+                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                  } flex-col md:flex-row`}
                 >
                   {/* Timeline node */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-gradient-to-r from-aegis-brown to-aegis-burgundy rounded-full border-4 border-aegis-black shadow-lg z-10">
+                  <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-8 h-8 bg-gradient-to-r from-aegis-brown to-aegis-burgundy rounded-full border-4 border-aegis-black shadow-lg z-10">
                     <div className="w-full h-full bg-aegis-highlight rounded-full animate-pulse" />
                   </div>
 
                   {/* Content card */}
-                  <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                  <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:pr-8 pl-16 md:pl-0' : 'md:pl-8 pl-16 md:pr-0'}`}>
                     <div className="glass-effect rounded-xl p-8 border border-aegis-brown/30 hover:border-aegis-highlight/50 transition-all duration-300 group">
                       {/* Committee badge and difficulty */}
                       <div className="flex justify-between items-start mb-4">
@@ -265,7 +266,7 @@ const Agendas: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-5xl font-serif font-bold text-aegis-white mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-aegis-white mb-6"
             >
               Ready to tackle these challenges?
             </motion.h2>
@@ -273,7 +274,7 @@ const Agendas: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-aegis-off-white mb-8"
+              className="text-lg sm:text-xl text-aegis-off-white mb-8 px-4"
             >
               Choose your committee and prepare to engage with some of the most pressing issues facing our world today.
             </motion.p>
@@ -283,21 +284,21 @@ const Agendas: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <a
-                href="/registration"
+              <Link
+                to="/registration"
                 className="inline-flex items-center px-8 py-4 bg-aegis-white text-aegis-burgundy font-semibold rounded-lg hover:bg-aegis-off-white transform hover:scale-105 transition-all duration-300 shadow-lg"
               >
                 Register Now
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </a>
-              <a
-                href="/committees"
+              </Link>
+              <Link
+                to="/committees"
                 className="inline-flex items-center px-8 py-4 border-2 border-aegis-white text-aegis-white font-semibold rounded-lg hover:bg-aegis-white hover:text-aegis-burgundy transition-all duration-300"
               >
                 Explore Committees
-              </a>
+              </Link>
             </motion.div>
           </div>
         </section>

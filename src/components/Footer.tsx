@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="border-t border-aegis-brown/30 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-aegis-off-white text-sm">
-            © 2024 AEGIS MUN. All rights reserved.
+            © 2025 AEGIS MUN. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a

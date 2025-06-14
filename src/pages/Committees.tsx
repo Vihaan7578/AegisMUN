@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 interface Committee {
   id: string
@@ -117,7 +118,7 @@ const Committees: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-serif font-black text-aegis-white mb-6"
+              className="text-4xl sm:text-5xl md:text-7xl font-serif font-black text-aegis-white mb-6"
             >
               Choose Your Committee
             </motion.h1>
@@ -125,7 +126,7 @@ const Committees: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-aegis-off-white max-w-3xl mx-auto"
+              className="text-lg sm:text-xl text-aegis-off-white max-w-3xl mx-auto px-4"
             >
               Dive into global challenges across our expertly curated committees, 
               each designed to test your diplomatic skills and expand your worldview.
@@ -169,7 +170,7 @@ const Committees: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               layout
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
             >
               <AnimatePresence>
                 {filteredCommittees.map((committee, index) => (
@@ -241,11 +242,11 @@ const Committees: React.FC = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
-                className="bg-aegis-dark-gray rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-aegis-brown"
+                className="bg-aegis-dark-gray rounded-xl p-4 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-aegis-brown mx-4"
               >
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h2 className="text-3xl font-serif font-bold text-aegis-white mb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-aegis-white mb-2">
                       {selectedCommittee.abbreviation}
                     </h2>
                     <p className="text-aegis-off-white">{selectedCommittee.name}</p>
@@ -271,7 +272,7 @@ const Committees: React.FC = () => {
                     <p className="text-aegis-off-white">{selectedCommittee.description}</p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <h3 className="text-lg font-semibold text-aegis-highlight mb-2">Committee Details</h3>
                       <ul className="space-y-2 text-aegis-off-white">
@@ -294,15 +295,15 @@ const Committees: React.FC = () => {
                   </div>
 
                   <div className="pt-4 border-t border-aegis-brown/30">
-                    <a
-                      href="/registration"
+                    <Link
+                      to="/registration"
                       className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-aegis-brown to-aegis-burgundy text-aegis-white font-semibold rounded-lg hover:from-aegis-burgundy hover:to-aegis-brown transition-all duration-300"
                     >
                       Register for this Committee
                       <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>

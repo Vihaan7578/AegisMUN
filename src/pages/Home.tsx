@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import CountdownTimer from '../components/CountdownTimer'
 import InteractiveHeroText from '../components/InteractiveHeroText'
 
@@ -45,10 +46,10 @@ const Home: React.FC = () => {
               transition={{ duration: 0.8, delay: 1 }}
               className="mb-12"
             >
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-aegis-white mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-aegis-white mb-6">
                 MODEL. DEBATE. INSPIRE.
               </h2>
-              <p className="text-lg md:text-xl text-aegis-off-white max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-aegis-off-white max-w-2xl mx-auto px-4">
                 Where diplomacy meets audacity.
               </p>
             </motion.div>
@@ -59,15 +60,15 @@ const Home: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 1.5 }}
             >
-              <a
-                href="/registration"
+              <Link
+                to="/registration"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-aegis-brown to-aegis-burgundy text-aegis-white font-semibold rounded-full hover:from-aegis-burgundy hover:to-aegis-brown transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
                 <span className="mr-2">Register Now</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </a>
+              </Link>
             </motion.div>
           </div>
 
@@ -90,11 +91,11 @@ const Home: React.FC = () => {
         <section className="py-20 bg-gradient-to-b from-aegis-black to-aegis-dark-gray">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-6xl font-serif font-bold text-aegis-white mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif font-bold text-aegis-white mb-6">
                 Where diplomacy meets{' '}
                 <span className="text-aegis-highlight">audacity</span>
               </h2>
-              <p className="text-xl text-aegis-off-white max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl text-aegis-off-white max-w-3xl mx-auto leading-relaxed px-4">
                 AEGIS MUN brings together brilliant minds from around the world to tackle 
                 global challenges, forge diplomatic solutions, and shape the future through 
                 meaningful dialogue and collaboration.
@@ -148,29 +149,29 @@ const Home: React.FC = () => {
         {/* Call to Action Section */}
         <section className="py-20 bg-gradient-to-r from-aegis-burgundy to-aegis-brown">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-aegis-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-aegis-white mb-6">
               Ready to make your mark?
             </h2>
-            <p className="text-xl text-aegis-off-white mb-8">
+            <p className="text-lg sm:text-xl text-aegis-off-white mb-8 px-4">
               Join hundreds of delegates in shaping tomorrow's diplomatic landscape. 
               Your voice matters, your ideas count.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/registration"
+              <Link
+                to="/registration"
                 className="inline-flex items-center px-8 py-4 bg-aegis-white text-aegis-burgundy font-semibold rounded-lg hover:bg-aegis-off-white transform hover:scale-105 transition-all duration-300 shadow-lg"
               >
                 Register Now
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </a>
-              <a
-                href="/committees"
+              </Link>
+              <Link
+                to="/committees"
                 className="inline-flex items-center px-8 py-4 border-2 border-aegis-white text-aegis-white font-semibold rounded-lg hover:bg-aegis-white hover:text-aegis-burgundy transition-all duration-300"
               >
                 View Committees
-              </a>
+              </Link>
             </div>
           </div>
         </section>
