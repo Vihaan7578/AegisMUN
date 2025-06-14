@@ -22,7 +22,7 @@ const Team: React.FC = () => {
       name: 'Daenerys Targaryen',
       position: 'Secretary-General',
       bio: 'The Mother of Dragons and former Queen of Meereen brings unparalleled experience in liberation movements and diplomatic negotiations. Known for her fierce advocacy for the oppressed and her revolutionary approach to breaking chains of injustice.',
-      image: '/src/assets/team/daenerys.jpg',
+      image: '/images/team/daenerys.jpg',
       funFact: 'Can conduct negotiations in High Valyrian, Dothraki, and Common Tongue',
       category: 'Secretariat'
     },
@@ -31,7 +31,7 @@ const Team: React.FC = () => {
       name: 'Rhaenyra Targaryen',
       position: 'Deputy Secretary-General',
       bio: 'Heir to the Iron Throne and experienced in court politics, Princess Rhaenyra excels at navigating complex political landscapes and building coalitions. Her leadership during the Dance of Dragons demonstrated strategic thinking under pressure.',
-      image: '/src/assets/team/rhaenyra.jpg',
+      image: '/images/team/rhaenyra.jpg',
       funFact: 'First woman to be named heir to the Iron Throne, breaking centuries of tradition',
       category: 'Secretariat'
     },
@@ -40,7 +40,7 @@ const Team: React.FC = () => {
       name: 'Alex Dunphy',
       position: 'Chief of Research',
       bio: 'Valedictorian and academic prodigy with expertise in multiple fields including science, literature, and international relations. Her analytical mind and attention to detail ensure all committee research meets the highest standards.',
-      image: '/src/assets/team/alex.webp',
+      image: '/images/team/alex.webp',
       funFact: 'Has read every book in the Sherman Oaks High School library twice',
       category: 'Secretariat'
     },
@@ -50,7 +50,7 @@ const Team: React.FC = () => {
       name: 'Jake Peralta',
       position: 'Head of Crisis Management',
       bio: 'NYPD Detective with an impressive track record of solving complex cases and managing high-pressure situations. His quick thinking and ability to find creative solutions make him invaluable during crisis simulations.',
-      image: '/src/assets/team/jake.jpg',
+      image: '/images/team/jake.jpg',
       funFact: 'Holds the record for fastest case closure at the Nine-Nine precinct',
       category: 'Executive Board'
     },
@@ -59,7 +59,7 @@ const Team: React.FC = () => {
       name: 'Tony Stark',
       position: 'Director of Innovation',
       bio: 'Genius inventor and former CEO of Stark Industries, bringing cutting-edge technology solutions to Model UN proceedings. His experience leading the Avengers provides unique insights into international cooperation and crisis response.',
-      image: '/src/assets/team/tony.avif',
+      image: '/images/team/tony.avif',
       funFact: 'Built the first arc reactor in a cave with a box of scraps',
       category: 'Executive Board'
     },
@@ -68,7 +68,7 @@ const Team: React.FC = () => {
       name: 'Paxton Hall-Yoshida',
       position: 'Youth Outreach Coordinator',
       bio: 'Star swimmer and charismatic leader with exceptional interpersonal skills and cultural awareness. His ability to connect with diverse groups and navigate social dynamics makes him perfect for building bridges between different communities.',
-      image: '/src/assets/team/paxton.jpg',
+      image: '/images/team/paxton.jpg',
       funFact: 'State champion swimmer and surprisingly good at history tutoring',
       category: 'Executive Board'
     }
