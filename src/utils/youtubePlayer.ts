@@ -1,5 +1,5 @@
 // YouTube IFrame Player API integration
-import { FallbackAudioPlayer, FALLBACK_PLAYER_STATES } from './fallbackPlayer'
+import { FallbackAudioPlayer } from './fallbackPlayer'
 
 declare global {
   interface Window {
@@ -199,7 +199,7 @@ export class YouTubeMusicPlayer {
         console.log('YouTube API loaded successfully')
         
         // Create container
-        const container = this.createPlayerContainer()
+        this.createPlayerContainer()
         
         // Validate YouTube API is available
         if (!window.YT || !window.YT.Player) {

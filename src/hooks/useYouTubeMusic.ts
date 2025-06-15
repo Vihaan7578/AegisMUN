@@ -21,7 +21,7 @@ export const useYouTubeMusic = (): YouTubeMusicManager => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentSong, setCurrentSong] = useState<YouTubeSearchResult | null>(null)
   const [isSearching, setIsSearching] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0)
+  const [, setCurrentTime] = useState(0)
   const [searchResults, setSearchResults] = useState<YouTubeSearchResult[]>([])
   const [showSongSelection, setShowSongSelection] = useState(false)
   const [isPaused, setIsPaused] = useState(false)

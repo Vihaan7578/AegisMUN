@@ -154,7 +154,7 @@ export class FallbackAudioPlayer {
   getPlayerState(): number {
     if (!this.audio) return -1
     if (this.audio.ended) return 0
-    if (!this.audio.paused) return 1
+    if (!this.audio.paused && this.isPlaying) return 1
     return 2
   }
 
