@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import WinterToggle from './WinterToggle'
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -25,9 +25,7 @@ const Navbar: React.FC = () => {
   ]
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-aegis-burgundy/95 backdrop-blur-md shadow-lg'
@@ -63,6 +61,8 @@ const Navbar: React.FC = () => {
                   {item.name}
                 </Link>
               ))}
+              {/* Winter mode toggle button */}
+              <WinterToggle />
             </div>
           </div>
 
@@ -97,34 +97,31 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-aegis-burgundy/95 backdrop-blur-md"
-          >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    location.pathname === item.path
-                      ? 'text-aegis-highlight bg-aegis-white/10'
-                      : 'text-aegis-white hover:text-aegis-highlight hover:bg-aegis-white/10'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-aegis-burgundy/95 backdrop-blur-md">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  location.pathname === item.path
+                    ? 'text-aegis-highlight bg-aegis-white/10'
+                    : 'text-aegis-white hover:text-aegis-highlight hover:bg-aegis-white/10'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+            {/* Mobile toggle */}
+            <div className="px-3 py-2">
+              <WinterToggle />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+          </div>
+        </div>
+      )}
+    </nav>
   )
 }
 

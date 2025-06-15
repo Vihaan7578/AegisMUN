@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
+import useAudioManager from '../hooks/useAudioManager'
+import { useMusicContext } from '../contexts/MusicContext'
+import AudioControls from '../components/AudioControls'
+import ThemeNotification from '../components/ThemeNotification'
+import ContinueDialog from '../components/ContinueDialog'
+import TeamMemberModal from '../components/TeamMemberModal'
+import { themeMapping, defaultTheme } from '../data/themeMapping'
 
 interface TeamMember {
   id: string
@@ -14,6 +21,13 @@ interface TeamMember {
 
 const Team: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const [selectedMember, setSelectedMember] = useState<string | null>(null)
+  const [showNotification, setShowNotification] = useState(false)
+  const [currentTheme, setCurrentTheme] = useState<{ memberName: string; themeName: string } | null>(null)
+  const [modalMember, setModalMember] = useState<TeamMember | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const audioManager = useAudioManager()
+  const musicContext = useMusicContext()
 
   const teamMembers: TeamMember[] = [
     // Secretariat members
@@ -80,12 +94,153 @@ const Team: React.FC = () => {
     ? teamMembers 
     : teamMembers.filter(member => member.category === selectedCategory)
 
+  const handleMemberClick = async (member: TeamMember) => {
+    // Pause user's background music if playing
+    if (musicContext.isPlaying) {
+      musicContext.pauseMusic()
+    }
+
+    // Always stop any currently playing theme audio first
+    if (audioManager.isPlaying) {
+      await audioManager.stopTheme()
+    }
+
+    // Clear any existing notifications
+    setShowNotification(false)
+    setCurrentTheme(null)
+
+    // Open the modal
+    setModalMember(member)
+    setIsModalOpen(true)
+
+    // Automatically start playing the theme
+    try {
+      const theme = themeMapping[member.id] || defaultTheme
+      
+      // Play the theme with timestamp and duration
+      await audioManager.playTheme(theme.audioSrc, theme.startTime, theme.duration, member.name, theme.themeName, 0.3)
+      setSelectedMember(member.id)
+      
+      // Show notification
+      setCurrentTheme({ memberName: member.name, themeName: theme.themeName })
+      setShowNotification(true)
+      
+      // Auto-hide notification after theme duration + 1 second
+      setTimeout(() => setShowNotification(false), (theme.duration + 1) * 1000)
+    } catch (error) {
+      console.warn('Failed to play theme:', error)
+    }
+  }
+
+  const handlePlayTheme = async () => {
+    if (!modalMember) return
+
+    try {
+      // If clicking the same member, stop the theme
+      if (selectedMember === modalMember.id && audioManager.isPlaying) {
+        await audioManager.stopTheme()
+        setSelectedMember(null)
+        setShowNotification(false)
+        setCurrentTheme(null)
+        return
+      }
+
+      // Always stop any currently playing audio first (including continued themes)
+      if (audioManager.isPlaying) {
+        await audioManager.stopTheme()
+      }
+
+      // Clear any existing notifications
+      setShowNotification(false)
+      setCurrentTheme(null)
+
+      // Get theme for this member
+      const theme = themeMapping[modalMember.id] || defaultTheme
+      
+      // Play the theme with timestamp and duration
+      await audioManager.playTheme(theme.audioSrc, theme.startTime, theme.duration, modalMember.name, theme.themeName, 0.3)
+      setSelectedMember(modalMember.id)
+      
+      // Show notification
+      setCurrentTheme({ memberName: modalMember.name, themeName: theme.themeName })
+      setShowNotification(true)
+      
+      // Auto-hide notification after theme duration + 1 second
+      setTimeout(() => setShowNotification(false), (theme.duration + 1) * 1000)
+    } catch (error) {
+      console.warn('Failed to play theme:', error)
+    }
+  }
+
+  const handleCloseModal = async () => {
+    // Stop any playing theme when modal closes
+    if (audioManager.isPlaying) {
+      await audioManager.stopTheme()
+    }
+    
+    // Resume user's background music if it was playing
+    if (musicContext.isPlaying) {
+      musicContext.resumeMusic()
+    }
+    
+    // Clear states
+    setSelectedMember(null)
+    setShowNotification(false)
+    setCurrentTheme(null)
+    setIsModalOpen(false)
+    setModalMember(null)
+  }
+
   return (
     <>
       <Helmet>
         <title>Our Team - AEGIS MUN</title>
         <meta name="description" content="Meet the brilliant minds behind AEGIS MUN." />
       </Helmet>
+
+      <AudioControls
+        isPlaying={audioManager.isPlaying}
+        isMuted={audioManager.isMuted}
+        onToggleMute={audioManager.toggleMute}
+        onVolumeChange={audioManager.setVolume}
+        onStop={() => {
+          audioManager.stopTheme()
+          setSelectedMember(null)
+          setShowNotification(false)
+          setCurrentTheme(null)
+        }}
+      />
+
+      {/* Theme Notification */}
+      {currentTheme && selectedMember && (
+        <ThemeNotification
+          isVisible={showNotification}
+          memberName={currentTheme.memberName}
+          themeName={currentTheme.themeName}
+          duration={themeMapping[selectedMember]?.duration || 10}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+
+      {/* Continue Dialog */}
+      {audioManager.currentThemeInfo && (
+        <ContinueDialog
+          isVisible={audioManager.showContinueDialog}
+          memberName={audioManager.currentThemeInfo.memberName}
+          themeName={audioManager.currentThemeInfo.themeName}
+          onContinue={audioManager.continuePlaying}
+          onStop={audioManager.stopAfterTheme}
+        />
+      )}
+
+      {/* Team Member Modal */}
+      <TeamMemberModal
+        isOpen={isModalOpen}
+        member={modalMember}
+        isPlaying={selectedMember === modalMember?.id && audioManager.isPlaying}
+        onClose={handleCloseModal}
+        onPlayTheme={handlePlayTheme}
+      />
 
       <div className="min-h-screen pt-16">
         <section className="py-20 bg-gradient-to-br from-aegis-black to-aegis-dark-gray">
@@ -98,6 +253,14 @@ const Team: React.FC = () => {
             >
               Meet the Minds Behind AEGIS
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-aegis-off-white text-lg mb-4"
+            >
+              Click on any team member to see their profile and hear their theme song automatically! 🎵
+            </motion.p>
           </div>
         </section>
 
@@ -130,7 +293,12 @@ const Team: React.FC = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="glass-effect rounded-xl overflow-hidden border border-aegis-brown/30 hover:border-aegis-highlight/50 transition-all duration-300 group"
+                  className={`glass-effect rounded-xl overflow-hidden border transition-all duration-300 group cursor-pointer ${
+                    selectedMember === member.id 
+                      ? 'border-aegis-highlight shadow-lg shadow-aegis-highlight/20 scale-105' 
+                      : 'border-aegis-brown/30 hover:border-aegis-highlight/50'
+                  }`}
+                  onClick={() => handleMemberClick(member)}
                 >
                   <div className="relative">
                     <img
@@ -144,6 +312,28 @@ const Team: React.FC = () => {
                         {member.category}
                       </span>
                     </div>
+                    {selectedMember === member.id && (
+                      <div className="absolute top-4 right-4">
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ duration: 1, repeat: Infinity }}
+                          className="w-8 h-8 bg-aegis-highlight/90 rounded-full flex items-center justify-center backdrop-blur-sm"
+                        >
+                          <svg className="w-4 h-4 text-aegis-black" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.793L4.617 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.617l3.766-3.793a1 1 0 011.617.793zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
+                          </svg>
+                        </motion.div>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileHover={{ opacity: 1, scale: 1 }}
+                        className="bg-aegis-highlight/90 text-aegis-black px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm"
+                      >
+                        👁️ View Profile
+                      </motion.div>
+                    </div>
                   </div>
                   
                   <div className="p-6 space-y-4">
@@ -156,15 +346,23 @@ const Team: React.FC = () => {
                       </p>
                     </div>
                     
-                    <p className="text-aegis-off-white text-sm leading-relaxed">
+                    <p className="text-aegis-off-white text-sm leading-relaxed line-clamp-3">
                       {member.bio}
                     </p>
                     
                     <div className="pt-3 border-t border-aegis-brown/30">
-                      <p className="text-aegis-off-white text-xs italic">
+                      <p className="text-aegis-off-white text-xs italic line-clamp-2">
                         "{member.funFact}"
                       </p>
                     </div>
+                    
+                    {themeMapping[member.id] && (
+                      <div className="pt-2 border-t border-aegis-brown/20">
+                        <p className="text-aegis-highlight text-xs font-medium">
+                          🎵 {themeMapping[member.id].themeName}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}

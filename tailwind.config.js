@@ -7,18 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        'aegis-black': '#000000',
-        'aegis-white': '#FFFFFF',
-        'aegis-brown': '#8A4B38',
-        'aegis-burgundy': '#811A29',
-        'aegis-dark-gray': '#1E1E1E',
-        'aegis-off-white': '#F5F5F5',
-        'aegis-highlight': '#FFD37E',
+        'aegis-black': 'var(--clr-aegis-black)',
+        'aegis-white': 'var(--clr-aegis-white)',
+        'aegis-brown': 'var(--clr-aegis-brown)',
+        'aegis-burgundy': 'var(--clr-aegis-burgundy)',
+        'aegis-dark-gray': 'var(--clr-aegis-dark-gray)',
+        'aegis-off-white': 'var(--clr-aegis-off-white)',
+        'aegis-highlight': 'var(--clr-aegis-highlight)',
       },
       fontFamily: {
-        'serif': ['Playfair Display', 'serif'],
-        'sans': ['Inter', 'Roboto', 'Poppins', 'sans-serif'],
-        'bebas': ['Bebas Neue', 'cursive'],
+        // Primary font for body text and general content
+        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // Secondary font for headings and important text
+        'serif': ['Playfair Display', 'Georgia', 'serif'],
+        // Accent font for special elements (hero text, logos)
+        'display': ['Bebas Neue', 'Impact', 'Arial Black', 'sans-serif'],
       },
       fontSize: {
       },

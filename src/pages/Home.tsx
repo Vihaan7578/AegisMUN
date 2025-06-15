@@ -1,6 +1,5 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import CountdownTimer from '../components/CountdownTimer'
 import InteractiveHeroText from '../components/InteractiveHeroText'
@@ -30,36 +29,22 @@ const Home: React.FC = () => {
           {/* Hero content */}
           <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
             {/* Interactive AEGIS MODEL UN text */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="mb-8"
-            >
+            <div className="mb-8">
               <InteractiveHeroText />
-            </motion.div>
+            </div>
 
             {/* Tagline */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="mb-12"
-            >
+            <div className="mb-12">
               <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-aegis-white mb-6">
                 MODEL. DEBATE. INSPIRE.
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-aegis-off-white max-w-2xl mx-auto px-4">
                 Where diplomacy meets audacity.
               </p>
-            </motion.div>
+            </div>
 
             {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.5 }}
-            >
+            <div>
               <Link
                 to="/registration"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-aegis-brown to-aegis-burgundy text-aegis-white font-semibold rounded-full hover:from-aegis-burgundy hover:to-aegis-brown transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
@@ -69,22 +54,17 @@ const Home: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
-            </motion.div>
+            </div>
           </div>
 
           {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="animate-bounce">
               <svg className="w-6 h-6 text-aegis-highlight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </div>
-          </motion.div>
+          </div>
         </section>
 
         {/* Welcome Section */}

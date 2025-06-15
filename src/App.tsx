@@ -6,6 +6,12 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import FloatingParticles from './components/FloatingParticles'
+import SnowCanvas from './components/SnowCanvas'
+import WinterBackground from './components/WinterBackground'
+import ErrorBoundary from './components/ErrorBoundary'
+
+// Contexts
+import { MusicProvider } from './contexts/MusicContext'
 
 // Pages
 import Home from './pages/Home'
@@ -19,21 +25,43 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="min-h-screen bg-aegis-black text-aegis-white relative overflow-x-hidden">
-          <FloatingParticles />
-          <Navbar />
+          <ErrorBoundary>
+            <FloatingParticles />
+          </ErrorBoundary>
           
-          <main className="relative z-10">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/committees" element={<Committees />} />
-              <Route path="/agendas" element={<Agendas />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/registration" element={<Registration />} />
-            </Routes>
-          </main>
+          <ErrorBoundary>
+            <SnowCanvas />
+          </ErrorBoundary>
           
-          <Footer />
-          <ScrollToTop />
+          <ErrorBoundary>
+            <WinterBackground />
+          </ErrorBoundary>
+          
+          <ErrorBoundary>
+            <MusicProvider>
+              <Navbar />
+              
+              <main className="relative z-10">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/committees" element={<Committees />} />
+                  <Route path="/agendas" element={<Agendas />} />
+                  <Route path="/team" element={<Team />} />
+                  <Route path="/registration" element={<Registration />} />
+                </Routes>
+              </main>
+              
+              <Footer />
+              
+              {/* YouTube Player Container */}
+              <div id="youtube-music-player" style={{ display: 'none' }}></div>
+            </MusicProvider>
+          </ErrorBoundary>
+          
+          {/* ScrollToTop outside MusicProvider to prevent AnimatePresence conflicts */}
+          <ErrorBoundary>
+            <ScrollToTop />
+          </ErrorBoundary>
         </div>
       </Router>
     </HelmetProvider>

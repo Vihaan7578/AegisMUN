@@ -18,7 +18,7 @@ const InteractiveHeroText: React.FC = () => {
         return (
           <motion.span
             key={index}
-            className="relative inline-block cursor-pointer select-none font-bebas font-normal text-aegis-white"
+            className="relative inline-block cursor-pointer select-none font-display font-normal text-aegis-white"
             style={{ 
               fontSize: 'clamp(2.5rem, 10vw, 8rem)',
               lineHeight: '0.9',
