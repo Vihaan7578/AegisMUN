@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import useAudioManager from '../hooks/useAudioManager'
 import { useMusicContext } from '../contexts/MusicContext'
 import AudioControls from '../components/AudioControls'
@@ -8,6 +8,7 @@ import ThemeNotification from '../components/ThemeNotification'
 import ContinueDialog from '../components/ContinueDialog'
 import TeamMemberModal from '../components/TeamMemberModal'
 import { themeMapping, defaultTheme } from '../data/themeMapping'
+import { useNavbar } from '../contexts/NavbarContext'
 
 interface TeamMember {
   id: string
@@ -28,6 +29,7 @@ const Team: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const audioManager = useAudioManager()
   const musicContext = useMusicContext()
+  const { isNavbarVisible, setNavbarVisible } = useNavbar()
 
   const teamMembers: TeamMember[] = [
     // Secretariat members
@@ -95,6 +97,9 @@ const Team: React.FC = () => {
     : teamMembers.filter(member => member.category === selectedCategory)
 
   const handleMemberClick = async (member: TeamMember) => {
+    // Hide navbar when modal opens
+    setNavbarVisible(false)
+    
     // Pause user's background music if playing
     if (musicContext.isPlaying) {
       musicContext.pauseMusic()
@@ -173,6 +178,9 @@ const Team: React.FC = () => {
   }
 
   const handleCloseModal = async () => {
+    // Show navbar when modal closes
+    setNavbarVisible(true)
+    
     // Stop any playing theme when modal closes
     if (audioManager.isPlaying) {
       await audioManager.stopTheme()
@@ -243,26 +251,36 @@ const Team: React.FC = () => {
       />
 
       <div className="min-h-screen pt-16">
-        <section className="py-20 bg-gradient-to-br from-aegis-black to-aegis-dark-gray">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+        <AnimatePresence>
+          {isNavbarVisible && (
+            <motion.section
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-serif font-black text-aegis-white mb-6"
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="py-20 bg-gradient-to-br from-aegis-black to-aegis-dark-gray"
             >
-              Meet the Minds Behind AEGIS
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-aegis-off-white text-lg mb-4"
-            >
-              Click on any team member to see their profile and hear their theme song automatically! 🎵
-            </motion.p>
-          </div>
-        </section>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-5xl md:text-7xl font-serif font-black text-aegis-white mb-6"
+                >
+                  Meet the Minds Behind AEGIS
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-aegis-off-white text-lg mb-4"
+                >
+                  Click on any team member to see their profile and hear their theme song automatically! 🎵
+                </motion.p>
+              </div>
+            </motion.section>
+          )}
+        </AnimatePresence>
 
         <section className="py-8 bg-aegis-dark-gray/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

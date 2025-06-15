@@ -167,6 +167,11 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
     return 'w-14 h-14'
   }
 
+  // Don't render music widget on mobile devices
+  if (platform.isMobile) {
+    return null
+  }
+
   return (
     <>
       <div className={`${getPositioningClasses()} ${platformClasses}`} style={platformStyles} data-music-widget>

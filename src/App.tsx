@@ -13,6 +13,7 @@ import LoadingScreen from './components/LoadingScreen'
 
 // Contexts
 import { MusicProvider } from './contexts/MusicContext'
+import { NavbarProvider } from './contexts/NavbarContext'
 
 // Utils
 import { usePlatformDetection, getViewportClasses } from './utils/platformDetection'
@@ -59,8 +60,9 @@ function App() {
           </ErrorBoundary>
           
           <ErrorBoundary>
-            <MusicProvider>
-              <Navbar />
+            <NavbarProvider>
+              <MusicProvider>
+                <Navbar />
               
               <main className="relative z-10">
                 <Routes>
@@ -77,6 +79,7 @@ function App() {
               {/* YouTube Player Container */}
               <div id="youtube-music-player" style={{ display: 'none' }}></div>
             </MusicProvider>
+            </NavbarProvider>
           </ErrorBoundary>
           
           {/* ScrollToTop outside MusicProvider to prevent AnimatePresence conflicts */}
