@@ -25,24 +25,72 @@ export const useYouTubeMusic = (): YouTubeMusicManager => {
   const [searchResults, setSearchResults] = useState<YouTubeSearchResult[]>([])
   const [showSongSelection, setShowSongSelection] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
   
   const playerRef = useRef<YouTubeMusicPlayer | null>(null)
+
+  // Cleanup on component unmount or page unload
+  useEffect(() => {
+    const cleanup = () => {
+      if (playerRef.current) {
+        try {
+          playerRef.current.destroy()
+          playerRef.current = null
+        } catch (error) {
+          console.warn('Error during player cleanup:', error)
+        }
+      }
+    }
+
+    // Add beforeunload listener to prevent errors on page reload
+    const handleBeforeUnload = () => {
+      cleanup()
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      cleanup()
+    }
+  }, [])
 
   // YouTube Player API integration
   const initializePlayer = useCallback(async (videoId: string) => {
     try {
       console.log('Initializing player for video:', videoId)
       
+      // Ensure we don't initialize multiple times
+      if (isInitialized && playerRef.current) {
+        try {
+          await playerRef.current.loadVideo(videoId, true)
+          return
+        } catch (error) {
+          console.warn('Failed to reuse existing player, creating new one:', error)
+        }
+      }
+      
       // Create YouTube player instance
       if (playerRef.current) {
         console.log('Destroying existing player')
-        playerRef.current.destroy()
+        try {
+          playerRef.current.destroy()
+        } catch (error) {
+          console.warn('Error destroying existing player:', error)
+        }
         playerRef.current = null
+      }
+      
+      // Check if YouTube player container exists
+      const container = document.getElementById('youtube-music-player')
+      if (!container) {
+        throw new Error('YouTube player container not found')
       }
       
       console.log('Creating new YouTube player')
       const player = new YouTubeMusicPlayer('youtube-music-player')
       playerRef.current = player
+      setIsInitialized(true)
       
       // Set up time tracking
       player.setTimeUpdateCallback((currentTime) => {
@@ -86,9 +134,10 @@ export const useYouTubeMusic = (): YouTubeMusicManager => {
       
     } catch (error) {
       console.error('Failed to initialize YouTube player:', error)
+      setIsInitialized(false)
       throw error
     }
-  }, [])
+  }, [isInitialized])
 
   // Search and play music
   const searchAndPlay = useCallback(async (songName: string, artistName?: string) => {

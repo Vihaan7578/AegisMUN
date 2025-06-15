@@ -64,10 +64,15 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
     }
   }
 
-  const handleToggleMusic = () => {
+  const handleToggleMusic = (e?: React.MouseEvent) => {
     // Prevent rapid clicking that could cause state conflicts
     if (buttonState === 'searching') {
       return
+    }
+
+    // Stop event propagation to prevent unintended closes
+    if (e) {
+      e.stopPropagation()
     }
 
     if (isPlaying) {
@@ -76,6 +81,26 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
       setShowSearch(true)
     }
   }
+
+  // Handle outside clicks to close search form
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Element
+      if (showSearch && !target.closest('[data-music-widget]')) {
+        setShowSearch(false)
+      }
+    }
+
+    if (showSearch) {
+      document.addEventListener('mousedown', handleOutsideClick)
+      document.addEventListener('touchstart', handleOutsideClick)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+      document.removeEventListener('touchstart', handleOutsideClick)
+    }
+  }, [showSearch])
 
   // Determine button appearance based on stable state
   const getButtonClass = () => {
@@ -144,7 +169,7 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
 
   return (
     <>
-      <div className={`${getPositioningClasses()} ${platformClasses}`} style={platformStyles}>
+      <div className={`${getPositioningClasses()} ${platformClasses}`} style={platformStyles} data-music-widget>
         {/* Main Music Button */}
         <motion.button
           key={`music-main-button-${buttonState}`}
@@ -172,6 +197,9 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.8 }}
               className={`absolute ${platform.isMobile ? 'bottom-16 right-0 left-auto w-80 max-w-[calc(100vw-2rem)]' : 'bottom-16 left-0 min-w-80'} bg-aegis-burgundy/95 backdrop-blur-md rounded-xl p-4 shadow-xl border border-aegis-highlight/30`}
+              onClick={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => e.stopPropagation()}
             >
               <form onSubmit={handleSearch} className="space-y-3">
                 <div>
