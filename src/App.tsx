@@ -19,6 +19,7 @@ import { NavbarProvider } from './contexts/NavbarContext'
 import { usePlatformDetection, getViewportClasses } from './utils/platformDetection'
 import { useLoadingState } from './hooks/useLoadingState'
 import './utils/responsiveTest' // Auto-run responsive tests in development
+import './utils/mobileErrorHandler' // Auto-initialize mobile error handling
 
 // Pages
 import Home from './pages/Home'
