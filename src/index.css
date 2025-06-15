@@ -316,6 +316,62 @@
   }
 }
 
+/* Loading screen specific styles */
+.loading-screen {
+  /* Prevent any background scrolling during loading */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+/* Loading animation keyframes */
+@keyframes loading-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.loading-pulse {
+  animation: loading-pulse 2s ease-in-out infinite;
+}
+
+/* Smooth loading bar animation */
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 211, 126, 0.3) 0%,
+    rgba(255, 211, 126, 0.8) 50%,
+    rgba(255, 211, 126, 0.3) 100%
+  );
+  background-size: 200% 100%;
+  animation: loading-shimmer 2s ease-in-out infinite;
+}
+
+/* Performance optimizations for loading screen */
+.loading-optimized {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Audio Controls Slider Styles */
 .slider {
   -webkit-appearance: none;

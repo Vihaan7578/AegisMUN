@@ -9,12 +9,14 @@ import FloatingParticles from './components/FloatingParticles'
 import SnowCanvas from './components/SnowCanvas'
 import WinterBackground from './components/WinterBackground'
 import ErrorBoundary from './components/ErrorBoundary'
+import LoadingScreen from './components/LoadingScreen'
 
 // Contexts
 import { MusicProvider } from './contexts/MusicContext'
 
 // Utils
 import { usePlatformDetection, getViewportClasses } from './utils/platformDetection'
+import { useLoadingState } from './hooks/useLoadingState'
 import './utils/responsiveTest' // Auto-run responsive tests in development
 
 // Pages
@@ -27,10 +29,22 @@ import Registration from './pages/Registration'
 function App() {
   const platform = usePlatformDetection()
   const platformClasses = getViewportClasses(platform)
+  const { isLoading } = useLoadingState({
+    minLoadingTime: 3500, // 3.5 seconds to read the fun fact
+    skipLoadingInDev: false // Show loading even in development
+  })
+
+  const handleLoadingComplete = () => {
+    // This is now handled by the useLoadingState hook
+  }
   
   return (
     <HelmetProvider>
       <Router>
+        {/* Loading Screen */}
+        {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+        
+        {/* Main App Content */}
         <div className={`min-h-screen bg-aegis-black text-aegis-white relative overflow-x-hidden ${platformClasses}`}>
           <ErrorBoundary>
             <FloatingParticles />
