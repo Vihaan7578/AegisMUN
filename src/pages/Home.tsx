@@ -3,8 +3,11 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import CountdownTimer from '../components/CountdownTimer'
 import InteractiveHeroText from '../components/InteractiveHeroText'
+import { usePlatformDetection } from '../utils/platformDetection'
 
 const Home: React.FC = () => {
+  const platform = usePlatformDetection()
+  
   return (
     <>
       <Helmet>
@@ -22,12 +25,12 @@ const Home: React.FC = () => {
 
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section className={`relative ${platform.isMobile ? 'min-h-[100dvh]' : 'min-h-screen'} flex items-center justify-center overflow-hidden safe-area-top`}>
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-aegis-black via-aegis-dark-gray to-aegis-black" />
           
           {/* Hero content */}
-          <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
+          <div className={`relative z-10 text-center ${platform.isMobile ? 'px-4' : 'px-4 sm:px-6 lg:px-8'} safe-area-left safe-area-right`}>
             {/* Interactive AEGIS MODEL UN text */}
             <div className="mb-8">
               <InteractiveHeroText />
@@ -35,10 +38,10 @@ const Home: React.FC = () => {
 
             {/* Tagline */}
             <div className="mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-aegis-white mb-6">
+              <h2 className={`${platform.isMobile ? 'text-2xl' : 'text-2xl sm:text-3xl md:text-5xl lg:text-6xl'} font-serif text-aegis-white mb-6`}>
                 MODEL. DEBATE. INSPIRE.
               </h2>
-              <p className="text-base sm:text-lg md:text-xl text-aegis-off-white max-w-2xl mx-auto px-4">
+              <p className={`${platform.isMobile ? 'text-base leading-relaxed' : 'text-base sm:text-lg md:text-xl'} text-aegis-off-white max-w-2xl mx-auto px-4`}>
                 Where diplomacy meets audacity.
               </p>
             </div>
@@ -47,7 +50,8 @@ const Home: React.FC = () => {
             <div>
               <Link
                 to="/registration"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-aegis-brown to-aegis-burgundy text-aegis-white font-semibold rounded-full hover:from-aegis-burgundy hover:to-aegis-brown transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                className={`inline-flex items-center ${platform.isMobile ? 'px-6 py-3 text-base' : 'px-8 py-4'} bg-gradient-to-r from-aegis-brown to-aegis-burgundy text-aegis-white font-semibold rounded-full hover:from-aegis-burgundy hover:to-aegis-brown ${platform.isMobile ? 'active:scale-95' : 'transform hover:scale-105'} transition-all duration-300 shadow-xl hover:shadow-2xl`}
+                style={{ minHeight: '44px', touchAction: 'manipulation' }}
               >
                 <span className="mr-2">Register Now</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +87,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Key Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className={`grid ${platform.isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 md:grid-cols-3 gap-8'} mb-16`}>
               <div className="glass-effect rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
                 <div className="w-16 h-16 bg-gradient-to-r from-aegis-brown to-aegis-burgundy rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-aegis-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -13,6 +13,10 @@ import ErrorBoundary from './components/ErrorBoundary'
 // Contexts
 import { MusicProvider } from './contexts/MusicContext'
 
+// Utils
+import { usePlatformDetection, getViewportClasses } from './utils/platformDetection'
+import './utils/responsiveTest' // Auto-run responsive tests in development
+
 // Pages
 import Home from './pages/Home'
 import Committees from './pages/Committees'
@@ -21,10 +25,13 @@ import Team from './pages/Team'
 import Registration from './pages/Registration'
 
 function App() {
+  const platform = usePlatformDetection()
+  const platformClasses = getViewportClasses(platform)
+  
   return (
     <HelmetProvider>
       <Router>
-        <div className="min-h-screen bg-aegis-black text-aegis-white relative overflow-x-hidden">
+        <div className={`min-h-screen bg-aegis-black text-aegis-white relative overflow-x-hidden ${platformClasses}`}>
           <ErrorBoundary>
             <FloatingParticles />
           </ErrorBoundary>

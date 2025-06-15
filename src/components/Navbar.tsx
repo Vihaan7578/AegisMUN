@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import WinterToggle from './WinterToggle'
+import { usePlatformDetection } from '../utils/platformDetection'
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
+  const platform = usePlatformDetection()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,15 +34,15 @@ const Navbar: React.FC = () => {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 safe-area-left safe-area-right">
+        <div className={`flex items-center justify-between ${platform.isMobile ? 'h-14' : 'h-16'}`}>
           {/* Logo */}
           <Link
             to="/"
             className="flex items-center space-x-2"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <span className="text-xl sm:text-2xl font-serif font-black text-aegis-white hover:text-aegis-highlight transition-colors">
+            <span className={`${platform.isMobile ? 'text-lg' : 'text-xl sm:text-2xl'} font-serif font-black text-aegis-white hover:text-aegis-highlight transition-colors`}>
               AEGIS MUN
             </span>
           </Link>
@@ -70,7 +72,8 @@ const Navbar: React.FC = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-aegis-white hover:text-aegis-highlight hover:bg-aegis-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-aegis-highlight"
+              className="inline-flex items-center justify-center p-3 rounded-md text-aegis-white hover:text-aegis-highlight hover:bg-aegis-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-aegis-highlight active:scale-95 transition-transform"
+              style={{ minHeight: '44px', minWidth: '44px', touchAction: 'manipulation' }}
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>

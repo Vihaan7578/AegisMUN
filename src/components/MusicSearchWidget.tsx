@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { YouTubeSearchResult } from '../utils/youtubeMusic'
 import SongSelectionModal from './SongSelectionModal'
 import SafeAnimatePresence from './SafeAnimatePresence'
+import { usePlatformDetection, getViewportClasses, getPlatformSpecificStyles } from '../utils/platformDetection'
 
 interface MusicSearchWidgetProps {
   onSearch: (songName: string, artistName?: string) => void
@@ -35,6 +36,11 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
   const [buttonState, setButtonState] = useState<'idle' | 'searching' | 'playing'>('idle')
   const previousIsPlaying = useRef(isPlaying)
   const previousIsSearching = useRef(isSearching)
+  
+  // Platform detection for responsive design
+  const platform = usePlatformDetection()
+  const platformClasses = getViewportClasses(platform)
+  const platformStyles = getPlatformSpecificStyles(platform)
 
   // Fast button state management for instant feedback
   useEffect(() => {
@@ -120,20 +126,37 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
     }
   }
 
+  // Get responsive positioning classes
+  const getPositioningClasses = () => {
+    if (platform.isMobile) {
+      return 'fixed bottom-4 right-4 left-auto safe-area-bottom z-50 flex flex-col gap-2'
+    }
+    return 'fixed bottom-6 left-6 z-50 flex flex-col gap-2'
+  }
+
+  // Get responsive button size
+  const getButtonSize = () => {
+    if (platform.isMobile) {
+      return 'w-12 h-12 xs:w-14 xs:h-14'
+    }
+    return 'w-14 h-14'
+  }
+
   return (
     <>
-      <div className="fixed bottom-6 left-6 z-50 flex flex-col gap-2">
+      <div className={`${getPositioningClasses()} ${platformClasses}`} style={platformStyles}>
         {/* Main Music Button */}
         <motion.button
           key={`music-main-button-${buttonState}`}
           initial={{ scale: 1 }}
           animate={{ scale: 1 }}
-          whileHover={buttonState !== 'searching' ? { scale: 1.1 } : {}}
+          whileHover={buttonState !== 'searching' && !platform.isMobile ? { scale: 1.1 } : {}}
           whileTap={buttonState !== 'searching' ? { scale: 0.95 } : {}}
           onClick={handleToggleMusic}
           disabled={buttonState === 'searching'}
-          className={`w-14 h-14 rounded-full shadow-xl border-2 transition-all duration-300 flex items-center justify-center ${getButtonClass()} ${buttonState === 'searching' ? 'cursor-wait' : 'cursor-pointer'}`}
+          className={`${getButtonSize()} rounded-full shadow-xl border-2 transition-all duration-300 flex items-center justify-center ${getButtonClass()} ${buttonState === 'searching' ? 'cursor-wait' : 'cursor-pointer'} ${platform.isMobile ? 'active:scale-95' : ''}`}
           title={getButtonTitle()}
+          style={{ minHeight: '44px', minWidth: '44px', ...platformStyles }}
         >
           {getButtonIcon()}
         </motion.button>
@@ -148,7 +171,7 @@ const MusicSearchWidget: React.FC<MusicSearchWidgetProps> = ({
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.8 }}
-              className="absolute bottom-16 left-0 bg-aegis-burgundy/95 backdrop-blur-md rounded-xl p-4 shadow-xl border border-aegis-highlight/30 min-w-80"
+              className={`absolute ${platform.isMobile ? 'bottom-16 right-0 left-auto w-80 max-w-[calc(100vw-2rem)]' : 'bottom-16 left-0 min-w-80'} bg-aegis-burgundy/95 backdrop-blur-md rounded-xl p-4 shadow-xl border border-aegis-highlight/30`}
             >
               <form onSubmit={handleSearch} className="space-y-3">
                 <div>

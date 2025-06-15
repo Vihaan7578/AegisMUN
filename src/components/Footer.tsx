@@ -1,17 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { usePlatformDetection } from '../utils/platformDetection'
 
 const Footer: React.FC = () => {
+  const platform = usePlatformDetection()
+  
   return (
-    <footer className="bg-aegis-dark-gray border-t border-aegis-brown/30 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className={`bg-aegis-dark-gray border-t border-aegis-brown/30 ${platform.isMobile ? 'mt-16' : 'mt-20'} safe-area-bottom`}>
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${platform.isMobile ? 'py-8' : 'py-12'} safe-area-left safe-area-right`}>
+        <div className={`grid ${platform.isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 md:grid-cols-4 gap-8'}`}>
           {/* Brand Section */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-3xl font-serif font-black text-aegis-white mb-4">
+          <div className={`${platform.isMobile ? 'col-span-1' : 'col-span-1 md:col-span-2'}`}>
+            <h3 className={`${platform.isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-black text-aegis-white mb-4`}>
               AEGIS MUN
             </h3>
-            <p className="text-aegis-off-white mb-6 max-w-md">
+            <p className={`text-aegis-off-white ${platform.isMobile ? 'mb-4 text-sm' : 'mb-6'} max-w-md`}>
               Empowering Voices. Crafting Futures. Join the premier Model United Nations 
               conference where diplomacy meets audacity.
             </p>

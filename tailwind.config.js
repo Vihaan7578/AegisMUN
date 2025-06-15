@@ -5,6 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+      // Mobile-first responsive design
+      'mobile': {'max': '767px'},
+      'tablet': {'min': '768px', 'max': '1023px'},
+      'desktop': {'min': '1024px'},
+      // Landscape and portrait orientations
+      'landscape': {'raw': '(orientation: landscape)'},
+      'portrait': {'raw': '(orientation: portrait)'},
+      // High DPI screens
+      'retina': {'raw': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)'},
+    },
     extend: {
       colors: {
         'aegis-black': 'var(--clr-aegis-black)',
@@ -14,6 +31,12 @@ export default {
         'aegis-dark-gray': 'var(--clr-aegis-dark-gray)',
         'aegis-off-white': 'var(--clr-aegis-off-white)',
         'aegis-highlight': 'var(--clr-aegis-highlight)',
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
       },
       fontFamily: {
         // Primary font for body text and general content
