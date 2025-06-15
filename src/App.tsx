@@ -30,7 +30,7 @@ function App() {
   const platform = usePlatformDetection()
   const platformClasses = getViewportClasses(platform)
   const { isLoading } = useLoadingState({
-    minLoadingTime: 6000, // 6 seconds to read the fun fact
+    minLoadingTime: 8000, // 8 seconds to read the fun fact
     skipLoadingInDev: false // Show loading even in development
   })
 

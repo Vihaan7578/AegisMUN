@@ -56,7 +56,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
   // Loading progress simulation
   useEffect(() => {
-    const duration = 6000 // 6 seconds loading time
+    const duration = 8000 // 8 seconds loading time
     const interval = 50 // Update every 50ms
     const increment = 100 / (duration / interval)
 

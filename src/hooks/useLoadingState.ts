@@ -7,7 +7,7 @@ interface LoadingStateConfig {
 
 export const useLoadingState = (config: LoadingStateConfig = {}) => {
   const {
-    minLoadingTime = 6000, // Minimum 6 seconds
+    minLoadingTime = 8000, // Minimum 8 seconds
     skipLoadingInDev = false
   } = config
 
