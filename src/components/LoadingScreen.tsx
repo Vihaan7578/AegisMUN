@@ -14,26 +14,26 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
   // Fun facts about the website's interactivity
   const funFacts = [
-    "🎵 You can play background music while browsing - just click the music button!",
-    "❄️ Toggle winter mode to see snowfall animations across the entire site!",
-    "🎭 Each team member has their own theme song that plays when you view their profile!",
-    "📱 This website automatically detects if you're on iOS or Android for the best experience!",
-    "🔍 The music search uses real YouTube API to find your favorite songs instantly!",
-    "🌟 All animations are optimized for your device - smooth on mobile, enhanced on desktop!",
-    "🎪 Hover effects and transitions change based on whether you're using touch or mouse!",
-    "🔄 The website remembers your theme preference and music state between visits!",
-    "🎨 Safe area support means it looks perfect even on phones with notches!",
-    "⚡ Background music continues playing while you navigate between pages!",
-    "🎮 Try the interactive hero text - it responds to your mouse movements!",
-    "📐 The layout automatically adapts to your screen size and orientation!",
-    "🎺 Team member themes are perfectly timed audio clips from their shows/movies!",
-    "🌈 The color scheme shifts subtly in winter mode for a cooler aesthetic!",
-    "🔧 Built with platform detection that optimizes touch targets for mobile devices!",
-    "⭐ PWA ready - you can install this website as an app on your phone!",
-    "🎪 Floating particles create an immersive atmosphere in the background!",
-    "🔊 Audio controls appear automatically when music is playing!",
-    "📏 All text sizes scale perfectly from tiny phones to large monitors!",
-    "🎯 Touch-friendly 44px minimum button sizes for perfect mobile interaction!"
+    "🎵 Click the music button to play songs while you browse the website!",
+    "❄️ Turn on winter mode to see beautiful snowfall across the entire site!",
+    "🎭 Each team member has their own special theme song - check them out!",
+    "📱 The website knows if you're on a phone or computer and adjusts automatically!",
+    "🔍 Search for any song you want - we connect directly to YouTube!",
+    "🌟 Everything moves smoothly on your device, whether it's a phone or computer!",
+    "🎪 Buttons and animations work differently if you're touching or using a mouse!",
+    "🔄 The website remembers your settings when you come back next time!",
+    "🎨 Works perfectly on all phones, even ones with curved screens or notches!",
+    "⚡ Music keeps playing as you move between different pages!",
+    "🎮 Move your mouse over the big text on the homepage - it follows you!",
+    "📐 The website changes its layout based on your screen size automatically!",
+    "🎺 Team member songs are short clips from their favorite movies and shows!",
+    "🌈 Colors change slightly when you turn on winter mode for a cooler look!",
+    "🔧 Buttons are made bigger on phones so they're easier to tap!",
+    "⭐ You can install this website like an app on your phone's home screen!",
+    "🎪 Watch the floating particles move around in the background!",
+    "🔊 Music controls show up automatically when a song is playing!",
+    "📏 Text gets bigger or smaller based on your screen size!",
+    "🎯 All buttons are big enough to tap easily on any phone!"
   ]
 
   // Select a random fact on component mount
@@ -56,7 +56,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
   // Loading progress simulation
   useEffect(() => {
-    const duration = 3000 // 3 seconds loading time
+    const duration = 6000 // 6 seconds loading time
     const interval = 50 // Update every 50ms
     const increment = 100 / (duration / interval)
 
